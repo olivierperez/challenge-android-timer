@@ -20,30 +20,32 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 
 private val DarkColorPalette = darkColors(
-    primary = purple200,
-    primaryVariant = purple700,
-    secondary = teal200
+    primary = Color(0xFFD06A4F),
+    onPrimary = Color(0XFF3D405B),
+    primaryVariant = Color(0xFFE07A5F),
+    secondary = Color(0XFF3D405B),
+    onSecondary = Color(0xFFF4F1DE),
+    background = Color(0xFF2D304B),
+    surface = Color(0XFF3D405B),
+    onSurface = Color(0xFFF4F1DE)
 )
 
 private val LightColorPalette = lightColors(
-    primary = purple500,
-    primaryVariant = purple700,
-    secondary = teal200
-
-        /* Other default colors to override
-    background = Color.White,
-    surface = Color.White,
-    onPrimary = Color.White,
-    onSecondary = Color.Black,
-    onBackground = Color.Black,
-    onSurface = Color.Black,
-    */
+    primary = Color(0XFF3D405B),
+    onPrimary = Color(0xFFF2CC8F),
+    primaryVariant = Color(0xFF2D304B),
+    secondary = Color(0xFFE07A5F),
+    onSecondary = Color(0xFF3D405B),
+    background = Color(0xFFF4F1DE),
+    surface = Color(0xFFD4D1BE),
+    onSurface = Color(0xFF3D405B)
 )
 
 @Composable
-fun MyTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable() () -> Unit) {
+fun TimerTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable() () -> Unit) {
     val colors = if (darkTheme) {
         DarkColorPalette
     } else {
