@@ -11,6 +11,8 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.androiddevchallenge.domain.Timer
@@ -26,10 +28,13 @@ fun TimerView(
     onTimerIncreased: (Timer) -> Unit,
     onStateClicked: (Timer, TimerState) -> Unit
 ) {
+    val alpha = if (timer.state == PRISTINE) 0.5f else 1f
     Row(
         modifier = Modifier
+            .shadow(4.dp)
             .background(MaterialTheme.colors.surface)
-            .padding(16.dp, 32.dp),
+            .padding(16.dp, 32.dp)
+            .alpha(alpha),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Spacer(modifier = Modifier.weight(1f))

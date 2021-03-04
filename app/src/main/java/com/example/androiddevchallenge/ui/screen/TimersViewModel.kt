@@ -29,7 +29,7 @@ class TimersViewModel : ViewModel() {
 
     fun onTimerDecreased(timer: Timer) {
         if (timer.remainingSeconds <= 0) return
-        if (timer.state == TimerState.PRISTINE) {
+        if (timer.state == TimerState.PRISTINE && _state.value!!.showAddPristine(timer)) {
             _state.postValue(
                 State(
                     _state.value!!.timers.replace(
@@ -54,7 +54,7 @@ class TimersViewModel : ViewModel() {
     }
 
     fun onTimerIncreased(timer: Timer) {
-        if (timer.state == TimerState.PRISTINE) {
+        if (timer.state == TimerState.PRISTINE && _state.value!!.showAddPristine(timer)) {
             _state.postValue(
                 State(
                     _state.value!!.timers.replace(
@@ -91,13 +91,18 @@ class TimersViewModel : ViewModel() {
     }
 }
 
+private fun State.showAddPristine(modified: Timer): Boolean {
+    val last = timers.last()
+    return modified === last || last.state != TimerState.PRISTINE
+}
+
 private fun State.tick(): State {
     return State(
         timers.map { timer ->
             when {
                 timer.state != TimerState.PLAY -> timer
                 timer.remainingSeconds > 1 -> timer.copy(remainingSeconds = timer.remainingSeconds - 1)
-                else -> Timer(0, TimerState.SETUP)
+                else -> Timer(0, TimerState.PRISTINE)
             }
         }
     )
