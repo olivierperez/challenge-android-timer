@@ -17,6 +17,7 @@ package com.example.androiddevchallenge
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -30,59 +31,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.androiddevchallenge.ui.screen.TimerApp
+import com.example.androiddevchallenge.ui.screen.TimersViewModel
 import com.example.androiddevchallenge.ui.theme.TimerTheme
 
 class MainActivity : AppCompatActivity() {
+
+    private val viewModel: TimersViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             TimerTheme {
-                TimerApp()
+                TimerApp(viewModel)
             }
         }
-    }
-}
-
-@Composable
-fun TimerApp() {
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colors.background
-    ) {
-        Column(
-            modifier = Modifier
-                .verticalScroll(rememberScrollState())
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-        ) {
-            Timer()
-            Timer()
-            Timer()
-            Timer()
-            Timer()
-            Timer()
-            Timer()
-            Timer()
-            Timer()
-            Timer()
-            Timer()
-            Timer()
-        }
-    }
-}
-
-@Preview("Light Theme", widthDp = 360, heightDp = 640)
-@Composable
-fun LightPreview() {
-    TimerTheme {
-        TimerApp()
-    }
-}
-
-@Preview("Dark Theme", widthDp = 360, heightDp = 640)
-@Composable
-fun DarkPreview() {
-    TimerTheme(darkTheme = true) {
-        TimerApp()
     }
 }
