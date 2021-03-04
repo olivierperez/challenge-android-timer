@@ -5,11 +5,27 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.androiddevchallenge.domain.Timer
 import com.example.androiddevchallenge.domain.TimerState
+import com.example.androiddevchallenge.replace
 
 class TimersViewModel : ViewModel() {
 
     private val _state = MutableLiveData(State())
     val state: LiveData<State> get() = _state
+
+    init {
+        Thread {
+            while (true) {
+                Thread.sleep(1000)
+                tick()
+            }
+        }.start()
+    }
+
+    private fun tick() {
+        _state.postValue(
+            _state.value!!.tick()
+        )
+    }
 
     fun onTimerDecreased(timer: Timer) {
         if (timer.remainingSeconds <= 0) return
@@ -75,6 +91,18 @@ class TimersViewModel : ViewModel() {
     }
 }
 
+private fun State.tick(): State {
+    return State(
+        timers.map { timer ->
+            when {
+                timer.state != TimerState.PLAY -> timer
+                timer.remainingSeconds > 1 -> timer.copy(remainingSeconds = timer.remainingSeconds - 1)
+                else -> Timer(0, TimerState.SETUP)
+            }
+        }
+    )
+}
+
 private fun State.remove(timer: Timer): State {
     val newTimers = timers
         .filterNot { it == timer }
@@ -82,19 +110,5 @@ private fun State.remove(timer: Timer): State {
     return State(newTimers ?: listOf(Timer()))
 }
 
-class State(
-    val timers: List<Timer> = listOf(Timer())
-)
-
 private fun State.replaceTimer(timer: Timer, transform: (Timer) -> Timer): State =
     State(timers.replace(timer, transform(timer)))
-
-private fun <E> List<E>.replace(old: E, new: E): List<E> {
-    return this.map {
-        if (it === old) {
-            new
-        } else {
-            it
-        }
-    }
-}
