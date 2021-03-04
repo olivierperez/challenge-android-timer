@@ -35,7 +35,7 @@ class TimersViewModel : ViewModel() {
                     _state.value!!.timers.replace(
                         timer,
                         Timer(
-                            timer.remainingSeconds - 1,
+                            timer.remainingSeconds - 10,
                             TimerState.SETUP
                         )
                     ) + Timer()
@@ -45,7 +45,7 @@ class TimersViewModel : ViewModel() {
             _state.postValue(
                 _state.value!!.replaceTimer(timer) { old ->
                     Timer(
-                        old.remainingSeconds - 1,
+                        old.remainingSeconds - 10,
                         TimerState.SETUP
                     )
                 }
@@ -60,7 +60,7 @@ class TimersViewModel : ViewModel() {
                     _state.value!!.timers.replace(
                         timer,
                         Timer(
-                            timer.remainingSeconds + 1,
+                            timer.remainingSeconds + 10,
                             TimerState.SETUP
                         )
                     ) + Timer()
@@ -70,7 +70,7 @@ class TimersViewModel : ViewModel() {
             _state.postValue(
                 _state.value!!.replaceTimer(timer) { old ->
                     Timer(
-                        old.remainingSeconds + 1,
+                        old.remainingSeconds + 10,
                         TimerState.SETUP
                     )
                 }

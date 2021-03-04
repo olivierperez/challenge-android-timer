@@ -39,7 +39,7 @@ fun TimerView(
     ) {
         Spacer(modifier = Modifier.weight(1f))
         Text(
-            timer.remainingSeconds.toString(),
+            timer.remainingSeconds.toTimeString(),
             color = MaterialTheme.colors.onSurface,
             style = MaterialTheme.typography.body1
         )
@@ -71,6 +71,14 @@ fun TimerView(
                 }
             }
     }
+}
+
+private fun Int.toTimeString(): String {
+    val seconds = this % 60
+    val minutes = (this - seconds) / 60
+    val secondsStr = seconds.toString().padStart(2, '0')
+    val minutesStr = minutes.toString().padStart(2, '0')
+    return "$minutesStr:$secondsStr"
 }
 
 @Composable
